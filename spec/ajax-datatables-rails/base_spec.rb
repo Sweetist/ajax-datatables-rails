@@ -113,6 +113,19 @@ describe AjaxDatatablesRails::Base do
           expect(data[:foo]).to eq 'bar'
         end
       end
+
+      context 'with no db field' do
+        let(:view) { double('view', params: complex_params) }
+        it 'should return a hash' do
+          datatable = ReallyComplexDatatable.new(view)
+          create_list(:user, 5)
+          data = datatable.as_json
+          expect(data[:recordsTotal]).to eq 5
+          expect(data[:recordsFiltered]).to eq 5
+          expect(data[:data]).to be_a(Array)
+          expect(data[:data].size).to eq 5
+        end
+      end
     end
   end
 

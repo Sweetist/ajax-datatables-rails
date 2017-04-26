@@ -42,6 +42,11 @@ module AjaxDatatablesRails
         @view_column[:source]
       end
 
+      def db_field?
+        return true if @view_column[:db_field].nil?
+        @view_column[:db_field]
+      end
+
       # Add sort_field option to allow overriding of sort field
       def sort_field
         @view_column[:sort_field] || field
