@@ -1,4 +1,62 @@
 # rubocop:disable Metrics/MethodLength
+def complex_params
+  ActionController::Parameters.new(
+    {
+      'draw' => '1',
+      'columns' => {
+        '0' => {
+          'data' => 'checkbox', 'name' => '', 'searchable' => 'true', 'orderable' => 'true',
+          'search' => {
+            'value' => '', 'regex' => 'false'
+          }
+        },
+        '1' => {
+          'data' => 'email', 'name' => '', 'searchable' => 'true', 'orderable' => 'true',
+          'search' => {
+            'value' => '', 'regex' => 'false'
+          }
+        },
+        '2' => {
+          'data' => 'first_name', 'name' => '', 'searchable' => 'true', 'orderable' => 'false',
+          'search' => {
+            'value' => '', 'regex' => 'false'
+          }
+        },
+        '3' => {
+          'data' => 'last_name', 'name' => '', 'searchable' => 'true', 'orderable' => 'true',
+          'search' => {
+            'value' => '', 'regex' => 'false'
+          }
+        },
+        '4' => {
+          'data' => 'post_id', 'name' => '', 'searchable' => 'true', 'orderable' => 'true',
+          'search' => {
+            'value' => '', 'regex' => 'false'
+          }
+        },
+        '5' => {
+          'data' => 'created_at', 'name' => '', 'searchable' => 'true', 'orderable' => 'true',
+          'search' => {
+            'value' => '', 'regex' => 'false'
+          },
+        },
+        '6' => {
+          'data' => 'username', 'name' => '', 'searchable' => 'true', 'orderable' => 'true',
+          'search' => {
+            'value' => '', 'regex' => 'false'
+          },
+        },
+      },
+      'order' => {
+        '0' => {'column' => '0', 'dir' => 'asc'}
+      },
+      'start' => '0', 'length' => '10', 'search' => {
+        'value' => '', 'regex' => 'false'
+      },
+      '_' => '1423364387185'
+    }
+  )
+end
 def sample_params
   ActionController::Parameters.new(
     {
@@ -107,18 +165,20 @@ end
 class ReallyComplexDatatable < SampleDatatable
   def view_columns
     @view_columns ||= {
+      checkbox:   { source: 'checkbox', db_field: false },
       username:   { source: 'User.username' },
       email:      { source: 'User.email',      cond: :null_value },
       first_name: { source: 'User.first_name', cond: :start_with },
       last_name:  { source: 'User.last_name',  cond: :end_with, formater: -> (o) { o.downcase } },
       post_id:    { source: 'User.post_id' },
-      created_at: { source: 'User.created_at', cond: :date_range },
+      created_at: { source: 'User.created_at', cond: :date_range }
     }
   end
 
   def data
     records.map do |record|
       {
+        checkbox:   'some data',
         username:   record.username,
         email:      record.email,
         first_name: record.first_name,

@@ -13,8 +13,9 @@ module AjaxDatatablesRails
       def sort_records(records)
         sort_by = datatable.orders.inject([]) do |queries, order|
           column = order.column
-          queries << order.query(column.sort_query) if column
+          queries << order.query(column.sort_query) if column && column.db_field?
         end
+        return records unless sort_by
         records.order(sort_by.join(", "))
       end
 
